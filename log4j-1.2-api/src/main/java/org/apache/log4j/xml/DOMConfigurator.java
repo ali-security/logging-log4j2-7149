@@ -114,6 +114,8 @@ public class DOMConfigurator {
             final XMLWatchdog xdog = new XMLWatchdog(fileName);
             xdog.setDelay(delay);
             xdog.start();
+        } else {
+            warnFullCompatibilityDisabled();
         }
     }
 
