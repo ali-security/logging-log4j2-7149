@@ -29,6 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.apache.log4j.Appender;
@@ -346,9 +347,9 @@ class DOMTestCase {
      * @throws Exception if IO error.
      */
     @Test
-    public void testConfigureAndWatch() throws Exception {
-        DOMConfigurator.configureAndWatch(
-                DOMTestCase.class.getResource("/DOMTestCase/DOMTestCase1.xml").getFile());
+    void testConfigureAndWatch() throws Exception {
+        final URL url = DOMTestCase.class.getResource("/DOMTestCase/DOMTestCase1.xml");
+        DOMConfigurator.configureAndWatch(Paths.get(url.toURI()).toString());
         assertNotNull(Logger.getRootLogger().getAppender("A1"));
     }
 
@@ -358,9 +359,9 @@ class DOMTestCase {
      * @throws IOException if IOException creating properties jar.
      */
     @Test
-    public void testJarURL() throws IOException {
-        final File input = new File(
-                DOMTestCase.class.getResource("/DOMTestCase/defaultInit.xml").getFile());
+    void testJarURL() throws Exception {
+        final URL url = DOMTestCase.class.getResource("/DOMTestCase/defaultInit.xml");
+        final File input = Paths.get(url.toURI()).toFile();
         System.out.println(input.getAbsolutePath());
         final File configJar = new File("target/output/xml.jar");
         final File dir = new File("target/output");
